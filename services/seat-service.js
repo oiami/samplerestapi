@@ -5,9 +5,12 @@ async function reserveASeat(seatId, personId) {
     const seat = await SeatModel.findOne({ _id: seatId })
     const person = await PersonModel.findOne({ _id: personId })
 
-    seat.person = person
-    seat.reservationTime = Date.now();
-
+    const reservePeriod = Date.now() - seat.reservationTime
+    // if the last reserve is more than 10 minute
+    if (reservePeriod > 600000 && person.credit >= seat.price) {
+        seat.person = person
+        seat.reservationTime = Date.now()
+    }
     await seat.save()
 
     return seat
