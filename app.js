@@ -75,6 +75,11 @@ app.get('/seat/all', async (req, res) => {
   res.send(seats)
 })
 
+app.get('/seat/available', async (req, res) => {
+  const seats = await SeatService.findAvailable()
+  res.send(seats)
+})
+
 app.get('/seat/:id', async (req, res) => {
   const seat = await SeatService.find(req.params.id)
   if (!seat) res.status(404)

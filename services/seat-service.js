@@ -20,6 +20,11 @@ async function findAll() {
     return SeatModel.find().populate('person')
 }
 
+async function findAvailable() {
+    return SeatModel.find().populate('person')
+    .nor([{ isPaid: true}, { reservationTime: { $ne: 0 } }])
+}
+
 async function add(seat) {
     return SeatModel.create(seat)
 }
@@ -39,6 +44,7 @@ async function find(_id) {
 module.exports = {
     reserveASeat,
     findAll,
+    findAvailable,
     find,
     add,
     del,
