@@ -16,6 +16,23 @@ async function reserveASeat(seatId, personId) {
     return seat
 }
 
+async function purchaseSeat(seatId, personId) {
+    const seat = await SeatModel.findOne({ _id: seatId, person: {_id: personId} })
+    const person = await PersonModel.findOne({ _id: personId })
+    const reservePeriod = Date.now() - seat.reservationTime
+    // if the last reserve is more than 10 minute
+    if (reservePeriod > 600000 && person.credit >= seat.price) {
+        seat.isPaid = true
+        person.credit = person.credit - seat.price
+        seat.person = person
+    }
+    await person.save()
+    await seat.save()
+
+    return seat
+}
+
+
 async function findAll() {
     return SeatModel.find().populate('person')
 }
@@ -43,6 +60,7 @@ async function find(_id) {
 
 module.exports = {
     reserveASeat,
+    purchaseSeat,
     findAll,
     findAvailable,
     find,

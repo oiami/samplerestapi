@@ -106,3 +106,8 @@ app.post('/seat/:id/reserve', async (req, res) => {
   const reserveSeat = await SeatService.reserveASeat(req.params.id, req.body.personId)
   res.send(reserveSeat)
 })
+
+app.post('/seat/:id/purchase', async (req, res) => {
+  const reserveSeat = await SeatService.purchaseSeat(req.params.id, req.body.personId)
+  res.send(reserveSeat)
+})
