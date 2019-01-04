@@ -91,5 +91,15 @@ http://localhost:3000/seat (POST)
 4. Delete a seat
 http://localhost:3000/seat/:seatId (DELETE)
 
-5. Reserve a seat
-http://localhost:3000/seat/5c2e8ec888bed41cb2d33709/reserve (POST)
+1. List all available seats
+http://localhost:3000/seat/available (GET)
+
+1. List all available seats for selected cinema
+http://localhost:3000/seat/cinema/:cinemaId (GET)
+
+5. Purchase a seat
+http://localhost:3000/seat/:seatId/purchase (POST)
+// body (JSON)
+{
+    "personId": "5c2f5bcbf54dc1083f68a9ed"
+}
