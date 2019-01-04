@@ -81,6 +81,12 @@ app.get('/seat/:id', async (req, res) => {
   res.send(seat)
 })
 
+app.get('/seat/cinema/:id', async (req, res) => {
+  const seat = await CinemaService.findSeat(req.params.id)
+  if (!seat) res.status(404)
+  res.send(seat)
+})
+
 app.post('/seat', async (req, res, next) => {
   const seat = await SeatService.add(req.body)
   res.send(seat)

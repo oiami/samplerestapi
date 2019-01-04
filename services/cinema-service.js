@@ -28,10 +28,17 @@ async function find(_id) {
     return CinemaModel.findOne({ _id }).populate('seats')
 }
 
+async function findSeat(_id) {
+    return CinemaModel.find({ _id }, {
+        seats: { $elemMatch : { $nor: [{ isPaid: true}, {reservationTime: {$ne: 0} }] }}
+    }).populate('cinema')
+}
+
 module.exports = {
     addSeat,
     findAll,
     find,
+    findSeat,
     add,
     del,
     delAll
